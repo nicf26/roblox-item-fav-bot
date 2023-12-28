@@ -8,6 +8,11 @@
 Favorite your item automatically with different cookies
 Easy setup
 
+#### main.py crashes when running!
+
+Launch it only with Start.bat, it might be a bug, idk why its crashing.
+
+
 #### How do I get a cookie?
 
 To do this, you must have a PC. Open any browser of your choice and open the developer tools or inspect element. Go to the application tab and then cookies. Find the cookie named .ROBLOSECURITY and copy the value. And no, i dont save/send your cookie anywhere.
