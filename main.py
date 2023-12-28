@@ -23,7 +23,7 @@ def GetItemID(customItemID):
     global itemID
     if customItemID == None:
         item = open('./itemID.txt', 'r').read()
-        if item == '':
+        if item == '' or item == 'YOUR-ITEM-ID':
             itemID = str(input('Your item ID:\n'))
         else:
             itemID = item
@@ -53,6 +53,7 @@ def Fav():
     print(f'URL Content: {str(furl._content).strip("}b'{")}')
     if int(furl.status_code) == 200 and str(furl._content) == "b'{}'":
         print('Success!')
+    input()
 
 def DoThing(customCookie, customItemID):
     GetCookie(customCookie)
