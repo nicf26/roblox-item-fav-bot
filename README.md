@@ -5,8 +5,8 @@
 
 ## Features
 
-Favorite your item automatically with different cookies
-Easy setup
+- Favorite your item automatically with different cookies
+- Easy setup
 
 #### main.py crashes when running!
 
