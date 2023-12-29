@@ -4,7 +4,7 @@ try:
     import requests.auth
     import robloxpy
 except ModuleNotFoundError:
-    import os
+    os.system('python -m pip install requests')
     os.system('python -m pip install robloxpy')
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -53,7 +53,6 @@ def Fav():
     print(f'URL Content: {str(furl._content).strip("}b'{")}')
     if int(furl.status_code) == 200 and str(furl._content) == "b'{}'":
         print('Success!')
-    input()
 
 def DoThing(customCookie, customItemID):
     GetCookie(customCookie)
@@ -65,4 +64,5 @@ def DoThing(customCookie, customItemID):
     else:
         print(isCookieValid)
 
-DoThing(None, None) # you can do whatever you want with it.
+if __name__ == "__main__":
+    DoThing(None, None) # you can do whatever you want with it.
