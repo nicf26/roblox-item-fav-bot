@@ -10,7 +10,7 @@ except ModuleNotFoundError:
 os.system('cls' if os.name == 'nt' else 'clear')
 
 cookie = ''
-itemID = ''
+itemsID = {}
 
 def GetCookie(customCookie):
     global cookie
@@ -19,16 +19,21 @@ def GetCookie(customCookie):
     else:
         cookie = customCookie
 
-def GetItemID(customItemID):
-    global itemID
-    if customItemID == None:
-        item = open('./itemID.txt', 'r').read()
-        if item == '' or item == 'YOUR-ITEM-ID':
-            itemID = str(input('Your item ID:\n'))
+def GetItemID(customItemsID):
+    global itemsID
+    if customItemsID == None:
+        items = open('./itemsID.txt', 'r').readlines()
+
+        if len(items) == 0 or (len(items) >= 1 and items[0].strip('\n') == 'item-id1...'):
+            useritems = str(input('Your items ID (EXAMPLE: 1234567890 0987654321 3216549870):\n'))
+            if str.find(useritems, ' '):
+                itemsID = useritems.split(' ')
+            print(itemsID)
         else:
-            itemID = item
+            itemsID = items
     else:
-        itemID = customItemID
+        if str.find(customItemsID, ' '):
+            itemsID = customItemsID.split(' ')
 
 def GetXcsrf():
     #https://auth.roblox.com/v2/logout
@@ -47,12 +52,13 @@ def Fav():
     print(f'User ID: {userID}')
     xcsrf = GetXcsrf()
     print(f'X-CSRF-TOKEN: {xcsrf}')
-    print(f'Item ID: {itemID}')
-    furl = requests.post(f'http://catalog.roblox.com/v1/favorites/users/{userID}/assets/{itemID}/favorite', headers={'X-CSRF-TOKEN': xcsrf, 'Referer': 'https://www.roblox.com'}, cookies={'.ROBLOSECURITY': cookie})
-    print(f'URL Status Code: {furl.status_code}')
-    print(f'URL Content: {str(furl._content).strip("}b'{")}')
-    if int(furl.status_code) == 200 and str(furl._content) == "b'{}'":
-        print('Success!')
+    
+    success = 0
+    for i in range(len(itemsID)):
+        furl = requests.post(f'http://catalog.roblox.com/v1/favorites/users/{userID}/assets/{itemsID[i].strip('\n')}/favorite', headers={'X-CSRF-TOKEN': xcsrf, 'Referer': 'https://www.roblox.com'}, cookies={'.ROBLOSECURITY': cookie})
+        if int(furl.status_code) == 200 and str(furl._content) == "b'{}'":
+            success += 1
+    print(f'{success}/{len(itemsID)} Success!')
 
 def DoThing(customCookie, customItemID):
     GetCookie(customCookie)
